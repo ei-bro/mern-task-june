@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+
+  <!-- font awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" />
+
+  <!-- main css -->
+  <link rel="stylesheet" href="./main.css" />
+  <title>Task Manager</title>
+</head>
+
+<body>
+  <form class="task-form ">
+    <h4>task manager</h4>
+    <div class="form-control">
+      <input type="text" name="name" class="task-input" placeholder="e.g. learn nodejs" />
+      <button type="submit" class="btn submit-btn ">Add</button>
+    </div>
+    <div class="form-alert alert-danger"></div>
+  </form>
+  <section class="tasks-container">
+
+    <!-- <p class=" loading"></p> -->
+
+    <div class="tasks">
+
+      <div class="single-task ">
+        <h5><span><i class="far fa-check-circle"></i></span>${name}</h5>
+        <div class="task-links">
+          <!-- edit link -->
+          <a href="task.html" class="edit-link">
+            <i class="fas fa-edit"></i>
+          </a>
+          <!-- delete btn -->
+          <button type="button" class="delete-btn">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+      </div>
+
+
+    </div>
+  </section>
+
+</body>
+
+</html>
