@@ -8,11 +8,11 @@ app.use(cors())
 
 
 const connection = mysql.createConnection({
-    user: "task-user",
-    host: "localhost",
-    database: "task-db",
-    password: "123456",
-})
+	user: "myDBuser",
+	password: "Testme1234",
+	host: "127.0.0.1",
+	database: "workout",
+});
 
 connection.connect((err) => {
     if (err) {
@@ -27,6 +27,13 @@ connection.connect((err) => {
 // middleware 
 app.use(express.json())
 
+// create table
+const taskTable = `  CREATE TABLE Task (
+	id INT NOT NULL AUTO_INCREMENT,
+	task_name VARCHAR(255),
+	completed BOOLEAN DEFAULT false,
+	PRIMARY KEY (id)
+)  `;
 
 // create task
 app.post('/task/create', (req, res) => {
@@ -41,7 +48,7 @@ app.post('/task/create', (req, res) => {
             return res.send(err.message)
         }
         else {
-            return res.send("Task created yoni")
+            return res.send("Task created")
         }
     })
 })
@@ -159,9 +166,4 @@ app.listen(5000, (err) => {
 })
 
 
-const taskTable = `  CREATE TABLE Task (
-	id INT NOT NULL AUTO_INCREMENT,
-	task_name VARCHAR(255),
-	completed BOOLEAN DEFAULT false,
-	PRIMARY KEY (id)
-)  `
+
