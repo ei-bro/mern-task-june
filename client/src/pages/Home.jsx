@@ -7,6 +7,15 @@ function Home() {
 	const [tasks, settasks] = useState([]);
 	const [isLoading, setisLoding] = useState(false);
 
+	const [tid, setTid] = useState();
+	const [show, setShow] = useState(false);
+
+	function toggle(id) {
+		console.log(id);
+		setShow(!show);
+		setTid(id);
+	}
+
 	// task name state
 	const [taskName, settaskName] = useState('');
 
@@ -121,6 +130,9 @@ function Home() {
 										return (
 											<div key={task.id}>
 												<div
+													onClick={() => {
+														toggle(task.id);
+													}}
 													className={`single-task ${
 														task.completed &&
 														'task-completed'
@@ -154,6 +166,19 @@ function Home() {
 														</button>
 													</div>
 												</div>
+												<p
+													className={` ${
+														task.id == tid && show
+															? null
+															: 'drop-down'
+													}`}
+												>
+													Lorem ipsum dolor sit amet
+													consectetur adipisicing
+													elit. Maxime quibusdam alias
+													maiores autem ab iure et est
+													distinctio harum tenetur.
+												</p>
 											</div>
 										);
 									})}
