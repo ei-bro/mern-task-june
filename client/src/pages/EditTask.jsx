@@ -36,11 +36,17 @@ function EditTask() {
 		fetchData();
 	}, []);
 	let namedTask = tasks[0]?.task_name;
+	let checkedDefault = tasks[0]?.completed
+	console.log(checkedDefault);
 	
-	// Having the input field an initial default value with fetched task name
+	// Having the input field an initial default value with fetched task name n checked status
 	useEffect(() => {
 		setTaskName(namedTask);
-	},[tasks])
+		setIsChecked(checkedDefault)
+	}, [tasks])
+	
+	
+	
 	
 	// edit status alert
 	function formStatusLOgic(msg, status) {
