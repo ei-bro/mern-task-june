@@ -1,16 +1,16 @@
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
-import axios from '../axiosConfig';
+import axios from "../axiosConfig";
 
 function Home() {
 	const [tasks, settasks] = useState([]);
 	const [isLoading, setisLoding] = useState(false);
 	// task name state
-	const [taskName, settaskName] = useState('');
+	const [taskName, settaskName] = useState("");
 
 	const [formStatus, setformStatus] = useState({
-		formMsg: '',
+		formMsg: "",
 		formSuccess: true,
 	});
 
@@ -18,10 +18,12 @@ function Home() {
 	async function fetchData() {
 		try {
 			setisLoding(true);
-			const { data } = await axios('/task');
+			const { data } = await axios("/task");
 			console.log(data);
 			settasks(data);
-			setisLoding(false);
+			setTimeout(() => {
+				setisLoding(false);
+			}, 1000);
 		} catch (error) {
 			setisLoding(false);
 			console.log(error);
@@ -35,7 +37,7 @@ function Home() {
 		});
 		setTimeout(() => {
 			setformStatus({
-				formMsg: '',
+				formMsg: "",
 				formSuccess: true,
 			});
 		}, 3000);
@@ -46,15 +48,15 @@ function Home() {
 		e.preventDefault();
 		try {
 			if (!taskName) {
-				formStatusLOgic('task name is required', false);
+				formStatusLOgic("task name is required", false);
 				return;
 			}
-			await axios.post('/task/create', {
+			await axios.post("/task/create", {
 				name: taskName,
 			});
-			settaskName('');
+			settaskName("");
 			fetchData();
-			formStatusLOgic('task created successfully', true);
+			formStatusLOgic("task created successfully", true);
 		} catch (error) {
 			console.log(error);
 		}
@@ -62,9 +64,15 @@ function Home() {
 
 	async function handleDelete(id) {
 		try {
-			await axios.delete('/task/' + id);
+			let sure = window.confirm("Continue to delete?");
+			if (sure) {
+				await axios.delete("/task/" + id);
 			fetchData();
-			formStatusLOgic('task deleted successfully', true);
+			formStatusLOgic("Task deleted successfully", true);
+			} else {
+				alert('No worries task is still there')
+			}
+			
 		} catch (error) {
 			console.log(error);
 		}
@@ -76,39 +84,37 @@ function Home() {
 
 	return (
 		<>
-			<form className='task-form ' onSubmit={handleSubmit}>
+			<form className="task-form " onSubmit={handleSubmit}>
 				<h4>task manager</h4>
-				<div className='form-control'>
+				<div className="form-control">
 					<input
 						value={taskName}
-						onChange={e => {
+						onChange={(e) => {
 							settaskName(e.target.value);
 						}}
-						type='text'
-						name='name'
-						className='task-input'
-						placeholder='e.g. learn nodejs'
+						type="text"
+						name="name"
+						className="task-input"
+						placeholder="e.g. learn nodejs"
 					/>
-					<button type='submit' className='btn submit-btn '>
+					<button type="submit" className="btn submit-btn ">
 						Add
 					</button>
 				</div>
 				<div
 					className={`form-alert ${
-						formStatus.formSuccess
-							? 'alert-success'
-							: 'alert-danger'
+						formStatus.formSuccess ? "alert-success" : "alert-danger"
 					}`}
 				>
 					{formStatus.formMsg}
 				</div>
 			</form>
-			<section className='tasks-container'>
+			<section className="tasks-container">
 				{isLoading ? (
-					<p className=' loading'></p>
+					<p className=" loading"></p>
 				) : (
 					<>
-						<div className='tasks'>
+						<div className="tasks">
 							{tasks.length === 0 ? (
 								<h3>no tasks found</h3>
 							) : (
@@ -118,35 +124,29 @@ function Home() {
 											<div
 												key={i}
 												className={`single-task ${
-													task.completed &&
-													'task-completed'
+													task.completed && "task-completed"
 												}`}
 											>
 												<h5>
 													<span>
-														<i className='far fa-check-circle'></i>
+														<i className="far fa-check-circle"></i>
 													</span>
 													{task.task_name}
 												</h5>
-												<div className='task-links'>
+												<div className="task-links">
 													{/* <!-- edit link --> */}
-													<Link
-														to={`/edit/${task.id}`}
-														className='edit-link'
-													>
-														<i className='fas fa-edit'></i>
+													<Link to={`/edit/${task.id}`} className="edit-link">
+														<i className="fas fa-edit"></i>
 													</Link>
 													{/* <!-- delete btn --> */}
 													<button
 														onClick={() => {
-															handleDelete(
-																task.id
-															);
+															handleDelete(task.id);
 														}}
-														type='button'
-														className='delete-btn'
+														type="button"
+														className="delete-btn"
 													>
-														<i className='fas fa-trash'></i>
+														<i className="fas fa-trash"></i>
 													</button>
 												</div>
 											</div>
