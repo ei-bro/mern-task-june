@@ -15,7 +15,7 @@ function EditTask() {
 	const handleCheckboxChange = (e) => {
 		setIsChecked(e.target.checked);
 	};
-	console.log(isChecked);
+	// console.log(isChecked);
 	// fetch data
 	async function fetchData() {
 		try {
@@ -30,14 +30,18 @@ function EditTask() {
 			console.log(error);
 		}
 	}
-	console.log(tasks);
 
 	// fetch
 	useEffect(() => {
 		fetchData();
 	}, []);
-
-	// console.log(id);
+	let namedTask = tasks[0]?.task_name;
+	
+	// Having the input field an initial default value with fetched task name
+	useEffect(() => {
+		setTaskName(namedTask);
+	},[tasks])
+	
 	// edit status alert
 	function formStatusLOgic(msg, status) {
 		setformStatus({
@@ -71,7 +75,7 @@ function EditTask() {
 				{tasks.map((item, i) => (
 					<div className="" key={i}>
 						<div className="row">
-							<div className="col-md-6">Task id:</div>{" "}
+							<div className="col-md-6">Task id:</div>
 							<div className="col-md-6">{item.id}</div>
 						</div>
 						<div className="row">
@@ -82,8 +86,7 @@ function EditTask() {
 									value={taskName}
 									onChange={(e) => setTaskName(e.target.value)}
 									name="name"
-									className="task-input"
-									placeholder="e.g. learn nodejs"
+									className="task-input input-padd"
 								/>
 							</div>
 						</div>
@@ -91,6 +94,7 @@ function EditTask() {
 							<div className="col-md-6">Completed </div>
 							<div className="col-md-6">
 								<input
+									className="checkbox"
 									type="checkbox"
 									name=""
 									id=""
@@ -113,12 +117,10 @@ function EditTask() {
 					</div>
 				))}
 			</form>
-			<div>
-				<Link to={`/`}>
-					<button className="btn hipster ">Back to Home Page</button>
-				</Link>
-				
-			</div>
+			<Link to={`/`}>
+				<button className="btn  back-link ">Back to Home Page</button>
+			</Link>
+			<div></div>
 		</div>
 	);
 }

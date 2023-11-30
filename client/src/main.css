@@ -195,6 +195,13 @@ textarea {
 	border-color: transparent;
 	border: 1px solid var(--grey-300);
 }
+/* custom added */
+.input-padd{
+	padding: 0;
+}
+.checkbox{
+	width: 10%;
+}
 .form-row {
 	margin-bottom: 1rem;
 }

@@ -64,7 +64,7 @@ function Home() {
 
 	async function handleDelete(id) {
 		try {
-			let sure = window.confirm("Do you want to proceed to delete the task?");
+			let sure = window.confirm("Continue to delete?");
 			if (sure) {
 				await axios.delete("/task/" + id);
 			fetchData();
