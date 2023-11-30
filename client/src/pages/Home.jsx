@@ -6,6 +6,7 @@ import axios from '../axiosConfig';
 function Home() {
 	const [tasks, settasks] = useState([]);
 	const [isLoading, setisLoding] = useState(false);
+
 	// task name state
 	const [taskName, settaskName] = useState('');
 
@@ -19,12 +20,13 @@ function Home() {
 		try {
 			setisLoding(true);
 			const { data } = await axios('/task');
-			console.log(data);
+			// console.log(data);
 			settasks(data);
 			setisLoding(false);
 		} catch (error) {
 			setisLoding(false);
 			console.log(error);
+			formStatusLOgic("Couldn't fetch data", false);
 		}
 	}
 
@@ -33,12 +35,14 @@ function Home() {
 			formMsg: msg,
 			formSuccess: status,
 		});
-		setTimeout(() => {
-			setformStatus({
-				formMsg: '',
-				formSuccess: true,
-			});
-		}, 3000);
+		if (status) {
+			setTimeout(() => {
+				setformStatus({
+					formMsg: '',
+					formSuccess: true,
+				});
+			}, 3000);
+		}
 	}
 
 	// create a new task
@@ -115,39 +119,40 @@ function Home() {
 								<>
 									{tasks.map((task, i) => {
 										return (
-											<div
-												key={i}
-												className={`single-task ${
-													task.completed &&
-													'task-completed'
-												}`}
-											>
-												<h5>
-													<span>
-														<i className='far fa-check-circle'></i>
-													</span>
-													{task.task_name}
-												</h5>
-												<div className='task-links'>
-													{/* <!-- edit link --> */}
-													<Link
-														to={`/edit/${task.id}`}
-														className='edit-link'
-													>
-														<i className='fas fa-edit'></i>
-													</Link>
-													{/* <!-- delete btn --> */}
-													<button
-														onClick={() => {
-															handleDelete(
-																task.id
-															);
-														}}
-														type='button'
-														className='delete-btn'
-													>
-														<i className='fas fa-trash'></i>
-													</button>
+											<div key={task.id}>
+												<div
+													className={`single-task ${
+														task.completed &&
+														'task-completed'
+													}`}
+												>
+													<h5>
+														<span>
+															<i className='far fa-check-circle'></i>
+														</span>
+														{task.task_name}
+													</h5>
+													<div className='task-links'>
+														{/* <!-- edit link --> */}
+														<Link
+															to={`/edit/${task.id}`}
+															className='edit-link'
+														>
+															<i className='fas fa-edit'></i>
+														</Link>
+														{/* <!-- delete btn --> */}
+														<button
+															onClick={() => {
+																handleDelete(
+																	task.id
+																);
+															}}
+															type='button'
+															className='delete-btn'
+														>
+															<i className='fas fa-trash'></i>
+														</button>
+													</div>
 												</div>
 											</div>
 										);

@@ -446,3 +446,9 @@ form > :last-child {
 	text-align: center;
 	margin-top: 1rem;
 }
+
+/*  */
+
+.drop-down {
+	display: none;
+}
